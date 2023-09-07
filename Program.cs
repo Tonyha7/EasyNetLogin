@@ -10,26 +10,34 @@ namespace EasyNetLogin
         [STAThread]
         static void Main()
         {
+            bool isNeedLoadForm = false;
+            
             string[] commandLineArgs = Environment.GetCommandLineArgs();
 
             for (int i = 0; i < commandLineArgs.Length; i++)
             {
                 if (commandLineArgs[i] == "-f")
                 {
-                    LoadForm();
+                    isNeedLoadForm = true;
                 }
             }
 
             String username = UserUtils.GetUserName();
             String password = UserUtils.GetPassword();
+
             if (String.IsNullOrEmpty(username) && String.IsNullOrEmpty(password))
             {
-                LoadForm();
+                isNeedLoadForm = true;
+            }
+
+            if (!isNeedLoadForm) {
+                IPAddress LocalIP = Dns.GetHostAddresses(Dns.GetHostName()).Where(ip => ip.AddressFamily.ToString().Equals("InterNetwork")).FirstOrDefault();
+                Login.login(LocalIP.ToString(), username, password);
             } else
             {
-                IPAddress LocalIP = Dns.GetHostAddresses(Dns.GetHostName()).Where(ip => ip.AddressFamily.ToString().Equals("InterNetwork")).FirstOrDefault();
-                Login.login(LocalIP.ToString(),username,password);
+                LoadForm();
             }
+            
         }
 
         static void LoadForm()
