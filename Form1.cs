@@ -32,7 +32,7 @@ namespace EasyNetLogin
             String password = UserUtils.GetPassword();
             if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password))
             {
-                String res = Login.login(LocalIP.ToString(),username,password);
+                String res = Login.login(LocalIP.ToString(), username, password);
                 if (res != null)
                 {
                     MessageBox.Show(res);
@@ -52,11 +52,12 @@ namespace EasyNetLogin
                 subKey.SetValue("username", username);
                 subKey.SetValue("password", password);
                 subKey.Close();
-            } else
+            }
+            else
             {
                 MessageBox.Show("用户名和密码不得留空");
             }
-            
+
         }
 
 
@@ -92,6 +93,7 @@ namespace EasyNetLogin
             this.button1.TabIndex = 2;
             this.button1.Text = "测试";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -101,6 +103,7 @@ namespace EasyNetLogin
             this.button2.TabIndex = 3;
             this.button2.Text = "保存";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
@@ -116,5 +119,6 @@ namespace EasyNetLogin
             this.PerformLayout();
 
         }
+
     }
-    }
+}
