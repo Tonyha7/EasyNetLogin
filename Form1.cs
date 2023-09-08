@@ -1,11 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace EasyNetLogin
@@ -26,13 +20,11 @@ namespace EasyNetLogin
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IPAddress LocalIP = Dns.GetHostAddresses(Dns.GetHostName()).Where(ip => ip.AddressFamily.ToString().Equals("InterNetwork")).FirstOrDefault();
-
             String username = UserUtils.GetUserName();
             String password = UserUtils.GetPassword();
             if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password))
             {
-                String res = Login.login(LocalIP.ToString(), username, password);
+                String res = Login.login(IP.localIP, username, password);
                 if (res != null)
                 {
                     MessageBox.Show(res);
@@ -55,7 +47,7 @@ namespace EasyNetLogin
             }
             else
             {
-                MessageBox.Show("用户名和密码不得留空");
+                MessageBox.Show("用户名和密码不得为空");
             }
 
         }

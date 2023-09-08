@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Windows.Forms;
 
 namespace EasyNetLogin
@@ -21,6 +20,20 @@ namespace EasyNetLogin
                     isNeedLoadForm = true;
                 }
             }
+            
+            IP.initLocalIP();
+
+            if (String.IsNullOrEmpty(IP.localIP))
+            {
+                new ToastContentBuilder()
+                   .AddArgument("action", "viewConversation")
+                   .AddText("获取局域网IP失败")
+                   .Show
+                   (toast =>
+                   {
+                       toast.ExpirationTime = DateTime.Now.AddSeconds(5);
+                   });
+            }
 
             String username = UserUtils.GetUserName();
             String password = UserUtils.GetPassword();
@@ -31,13 +44,11 @@ namespace EasyNetLogin
             }
 
             if (!isNeedLoadForm) {
-                IPAddress LocalIP = Dns.GetHostAddresses(Dns.GetHostName()).Where(ip => ip.AddressFamily.ToString().Equals("InterNetwork")).FirstOrDefault();
-                Login.login(LocalIP.ToString(), username, password);
+                Login.login(IP.localIP, username, password);
             } else
             {
                 LoadForm();
             }
-            
         }
 
         static void LoadForm()
