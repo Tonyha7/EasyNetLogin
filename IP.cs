@@ -21,15 +21,7 @@ namespace EasyNetLogin
                 localIP = LocalIP.ToString();
             } else
             {
-                new ToastContentBuilder()
-                    .AddArgument("action", "viewConversation")
-                    .AddText("获取局域网IP失败")
-                    .Show
-                    (toast =>
-                    {
-                        toast.ExpirationTime = DateTime.Now.AddSeconds(5);
-                    });
-                localIP = "";
+                localIP = "null";
             }
         }
     }

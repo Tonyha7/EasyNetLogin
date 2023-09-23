@@ -23,18 +23,6 @@ namespace EasyNetLogin
             
             IP.initLocalIP();
 
-            if (String.IsNullOrEmpty(IP.localIP))
-            {
-                new ToastContentBuilder()
-                   .AddArgument("action", "viewConversation")
-                   .AddText("获取局域网IP失败")
-                   .Show
-                   (toast =>
-                   {
-                       toast.ExpirationTime = DateTime.Now.AddSeconds(5);
-                   });
-            }
-
             String username = UserUtils.GetUserName();
             String password = UserUtils.GetPassword();
 
